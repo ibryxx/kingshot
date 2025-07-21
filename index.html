@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KINGSHOT Pitfall March Setup Guide</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body style="font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background:#f0f2f5; color:#2d3748; line-height:1.6; padding:0; margin:0;">
+
+<div style="max-width:800px; margin:20px auto; padding:0 15px;">
+  <div style="background:#fff; border-radius:12px; padding:25px; margin-bottom:25px; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+    <h1 style="margin:0 0 15px 0; color:#2d3748; font-size:28px; border-bottom:2px solid #e2e8f0; padding-bottom:10px;">📌 KINGSHOT Pitfall March Setup Guide</h1>
+
+    <div style="margin-bottom:35px; background:#f8fafc; padding:20px; border-radius:10px; border-left:4px solid #4299e1;">
+      <h2 style="margin:0 0 15px 0; color:#2b6cb0; font-size:22px;">1. Select Troop Ratio & Enter Total</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:center; margin-bottom:15px;">
+        <div>
+          <label style="display:block; font-weight:600; margin-bottom:5px; color:#4a5568;">Total Troops:</label>
+          <input id="totalTroops" type="number" placeholder="e.g. 100000" style="padding:10px 12px; border:1px solid #e2e8f0; border-radius:6px; font-size:16px; min-width:150px;">
+        </div>
+        <div>
+          <label style="display:block; font-weight:600; margin-bottom:5px; color:#4a5568;">Ratio:</label>
+          <select id="ratioSelect" style="padding:10px 12px; border:1px solid #e2e8f0; border-radius:6px; font-size:16px; min-width:220px;">
+            <option value="25,25,50">25% Infantry / 25% Cavalry / 50% Archers</option>
+            <option value="10,10,80">10% Infantry / 10% Cavalry / 80% Archers</option>
+            <option value="15,15,70">15% Infantry / 15% Cavalry / 70% Archers</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="calculate()" style="background:#4299e1; color:#fff; border:none; padding:12px 20px; border-radius:6px; cursor:pointer; font-weight:600; font-size:16px; transition:background 0.2s;">Calculate Troops</button>
+      <div id="result" style="margin-top:20px; background:#ebf8ff; padding:15px; border-radius:6px; display:none;"></div>
+    </div>
+
+    
+
+    <div style="margin-bottom:35px; background:#f8fafc; padding:20px; border-radius:10px; border-left:4px solid #9f7aea;">
+      <h2 style="margin:0 0 15px 0; color:#6b46c1; font-size:22px;">2. Setup Hero Lineup</h2>
+      <p style="margin:0 0 15px 0;">When joining rallies use <strong style="color:#6b46c1;">Chenko as your lead hero</strong> and your two strongest heroes in second and third positions..</p>
+      <p style="margin:0 0 15px 0;">Chenko is used because she has a skill that increases lethality which is the most important stat for the bear trap.</p>
+      <p style="margin:0 0 15px 0;">If you can fill all of your marches prioritize Archers, then Cavalry, then Infantry as Archers have the highest Lethality. Send 100% Archers for all marches if possible..</p>
+      
+      <div style="background:#faf5ff; padding:15px; border-radius:6px; border-left:4px solid #9f7aea;">
+        <p style="margin:0; color:#6b46c1; font-style:italic;"><strong>Tip:</strong> JOINERS — Send Chenko or Amadeus as <strong>first hero</strong>, omit others unless boosting capacity.</p>
+      </div>
+    </div>
+
+    <div style="margin-bottom:35px; background:#f8fafc; padding:20px; border-radius:10px; border-left:4px solid #ed8936;">
+      <h2 style="margin:0 0 15px 0; color:#9c4221; font-size:22px;">3. March Timing & Save Rally</h2>
+      <ol style="padding-left:20px; margin:0 0 20px 0;">
+        <li style="margin-bottom:8px;">Select which troops you want to deploy and arrange them on the formation screen.</li>
+        <li style="margin-bottom:8px;">Select hero lineup as Chanko > with 2 best heros </li>
+        <li style="margin-bottom:8px;">Adjust troops according to calculator or use only Highest Tier Archers</li>
+        <li style="margin-bottom:8px;">Click save icon on top right, then choose the slot.</li>
+      </ol>
+      <div style="background:#fff; padding:10px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.05); text-align:center;">
+        <img src="/march.png" alt="Example March Setup" style="max-width:100%; border-radius:6px; border:1px solid #e2e8f0;">
+        <p style="margin:10px 0 0 0; font-size:14px; color:#718096;">Example March Setup Interface</p>
+      </div>
+    </div>
+
+    <div style="background:#f8fafc; padding:20px; border-radius:10px; border-left:4px solid #e53e3e;">
+      <h2 style="margin:0 0 15px 0; color:#9b2c2c; font-size:22px;">4. Coordination Tips</h2>
+      <ul style="padding-left:20px; margin:0;">
+        <li style="margin-bottom:8px;">Only 1 lethality hero per joiner—avoids overcrowding</li>
+        <li style="margin-bottom:8px;">Prefer 100% archers for max lethality; add cavalry/infantry only as needed</li>
+        <li style="margin-bottom:8px;">Join or lead rallies with top heroes/troops—don't spread forces thin</li>
+        <li style="margin-bottom:8px;">Upgrade Pitfall level by donating arrows for global +25% attack buff</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function calculate() {
+    const tot = parseInt(document.getElementById('totalTroops').value);
+    const [i,c,a] = document.getElementById('ratioSelect').value.split(',').map(Number);
+    if (!tot || tot < 1) {
+      document.getElementById('result').textContent = 'Please enter a valid number of troops!';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').style.backgroundColor = '#fff5f5';
+      document.getElementById('result').style.color = '#c53030';
+      return;
+    }
+    const inf = Math.round(tot*i/100), cav = Math.round(tot*c/100), arc = tot - inf - cav;
+    document.getElementById('result').innerHTML = `
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; text-align:center;">
+        <div style="background:#ebf4ff; padding:10px; border-radius:6px;">
+          <div style="font-size:18px; font-weight:600; color:#2b6cb0;">Infantry</div>
+          <div style="font-size:24px; font-weight:700;">${inf}</div>
+          <div>📦</div>
+        </div>
+        <div style="background:#f0fff4; padding:10px; border-radius:6px;">
+          <div style="font-size:18px; font-weight:600; color:#276749;">Cavalry</div>
+          <div style="font-size:24px; font-weight:700;">${cav}</div>
+          <div>🐎</div>
+        </div>
+        <div style="background:#fffaf0; padding:10px; border-radius:6px;">
+          <div style="font-size:18px; font-weight:600; color:#975a16;">Archers</div>
+          <div style="font-size:24px; font-weight:700;">${arc}</div>
+          <div>🏹</div>
+        </div>
+      </div>`;
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('template').textContent = `I${inf} C${cav} A${arc}`;
+    document.getElementById('template').style.display = 'block';
+    document.getElementById('copyBtn').style.display = 'inline-block';
+  }
+  
+  function copyTemplate() {
+    navigator.clipboard.writeText(document.getElementById('template').textContent)
+    .then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied!';
+      btn.style.background = '#38a169';
+      setTimeout(() => {
+        btn.textContent = 'Copy Template';
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
