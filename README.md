@@ -1,0 +1,2 @@
+# kingshot
+game rally calculator
